@@ -41,7 +41,7 @@ class cpu_transaction;
     }
 
     // -------------------------------------------------------------------------
-    // constraint 2: rd != x0 cho các lệnh write register
+    // constraint 2: rd != x0 
     // -------------------------------------------------------------------------
     constraint legal_rd {
         if (opcode inside {7'b0110011, 7'b0010011, 7'b0000011})
@@ -49,7 +49,7 @@ class cpu_transaction;
     }
 
     // -------------------------------------------------------------------------
-    // constraint 3: legal funct3 theo opcode
+    // constraint 3: legal funct3 
     // -------------------------------------------------------------------------
     constraint legal_funct3 {
         if (opcode == 7'b0110011)       // R-type

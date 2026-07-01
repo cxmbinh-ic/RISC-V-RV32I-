@@ -15,7 +15,7 @@ logic [31:0] monitor_mem_data;
 logic [31:0] monitor_imm;
 //for branch
 logic        monitor_branch;
-// decoded instruction fields — aligned tại WB stage bởi tb_top
+// decoded instruction fields
 logic [6:0]  monitor_opcode;
 logic [4:0]  monitor_rs1;
 logic [4:0]  monitor_rs2;

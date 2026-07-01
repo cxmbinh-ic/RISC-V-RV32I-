@@ -1,9 +1,9 @@
 `include "cpu_if.sv"
-`include "cpu_transaction.sv"
+`include "cpu_trans_rilsb.sv"
 `include "cpu_gen.sv"
 `include "cpu_driver.sv"
 `include "cpu_monitor.sv"
-`include "cpu_scoreboard.sv"
+`include "cpu_scb.sv"
 `include "cpu_env.sv"
 
 module tb_top;

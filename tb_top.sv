@@ -19,25 +19,13 @@ module tb_top;
     );
 
     // ----------------------------------------------------------------
-    // IMEM pre-load: ghi vào memory[] trong khi reset=1
+    // Write to memory of IMEM
     // ----------------------------------------------------------------
     always @(posedge clk) begin
         if (intf.reset) begin
             my_cpu.imem_inst.memory[intf.drv_instr_addr] = intf.drv_instr;
         end
     end
-
-    // ================================================================
-    // PIPELINE SPY CHAIN
-    // Mỗi instruction đi qua: IF → ID → EX → MEM → WB (4 clock edge)
-    //
-    // Ta spy tại ID stage (id_instr) rồi delay 3 clock đến WB.
-    // Ta spy tại MEM stage (mem_*) rồi delay 1 clock đến WB.
-    // Ta spy tại EX stage (ex_imm_ext, ex_branch) rồi delay 2 clock.
-    // ================================================================
-
-    // ---------- Delay chain: ID → EX → MEM → WB (3 flops) ----------
-    // Source: id_instr tại posedge clock khi instruction đang ở ID stage
 
     logic [6:0]  ex_opcode,  mem_opcode,  wb_opcode;
     logic [4:0]  ex_rs1_spy, mem_rs1_spy, wb_rs1;
@@ -128,10 +116,6 @@ module tb_top;
     always @(posedge clk) mem_instr_spy <= ex_instr_spy;
     always @(posedge clk) wb_instr_spy  <= mem_instr_spy;
 
-    // ================================================================
-    // Drive interface signals — tất cả aligned tại WB stage
-    // Monitor chỉ cần đọc 1 clock, không cần tự delay
-    // ================================================================
     always @(posedge clk) begin
         if (!intf.reset) begin
 
@@ -139,11 +123,11 @@ module tb_top;
             intf.monitor_instr     <= wb_instr_spy;
             intf.monitor_pc        <= wb_pc_spy;
             intf.monitor_pc_next   <= wb_pcnext;
-            intf.monitor_rd        <= my_cpu.wb_rd;       // đã là WB signal
-            intf.monitor_rd_data   <= my_cpu.wb_rd_data;  // đã là WB signal
-            intf.monitor_reg_write <= my_cpu.wb_RegWrite; // đã là WB signal
+            intf.monitor_rd        <= my_cpu.wb_rd;       
+            intf.monitor_rd_data   <= my_cpu.wb_rd_data;
+            intf.monitor_reg_write <= my_cpu.wb_RegWrite; 
 
-            // Decoded fields — tất cả đã delay đúng đến WB
+            
             intf.monitor_opcode    <= wb_opcode;
             intf.monitor_rs1       <= wb_rs1;
             intf.monitor_rs2       <= wb_rs2;
@@ -151,13 +135,12 @@ module tb_top;
             intf.monitor_funct7b5  <= wb_funct7b5;
             intf.monitor_imm       <= wb_imm;
 
-            // --- MEM stage spy (đã delay 1 clock → aligned với WB time) ---
-            // SW: addr và data committed tại MEM, ta dùng wb_mem_* đã delay
+            
             intf.monitor_mem_write <= wb_MemWrite;
             intf.monitor_mem_addr  <= wb_mem_addr;
             intf.monitor_mem_data  <= wb_mem_data;
 
-            // --- Branch: resolved tại EX, đã delay 2 clock → WB time ---
+            
             intf.monitor_branch    <= wb_branch;
         end
     end

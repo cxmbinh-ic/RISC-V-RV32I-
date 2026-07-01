@@ -91,12 +91,7 @@ class cpu_scoreboard;
 
             // -----------------------------------------------------------
             // LW — Load Word
-            // Monitor captures at WB stage (reg_write path)
-            // FIX: don't check mem_addr (it belongs to next instruction's
-            //      MEM stage at WB capture time). Instead:
-            //      1. Compute expected_addr from golden model
-            //      2. Compare tr_actual.write_data against golden_ram
-            // -----------------------------------------------------------
+            
             else if (tr_actual.opcode == 7'b0000011) begin
                 bit [31:0] sco_rs1        = golden_rf[tr_actual.rs1];
                 bit signed [31:0] sco_imm = $signed(tr_actual.imm[11:0]);
@@ -115,7 +110,7 @@ class cpu_scoreboard;
                            tr_actual.pc, tr_actual.instr, expected_addr,
                            expected_data, tr_actual.write_data);
                 end
-                // Update golden RF with loaded value
+                
                 if (tr_actual.rd != 5'b0)
                     golden_rf[tr_actual.rd] = expected_data;
                 total_count++;
@@ -123,10 +118,7 @@ class cpu_scoreboard;
 
             // -----------------------------------------------------------
             // SW — Store Word
-            // Monitor captures at MEM stage (mem_write path)
-            // mem_addr is correctly populated from wb_alu_result spy
-            // FIX: use === for X-safe comparison, update golden_ram
-            // -----------------------------------------------------------
+            
             else if (tr_actual.opcode == 7'b0100011) begin
                 bit [31:0] sco_rs1        = golden_rf[tr_actual.rs1];
                 bit signed [31:0] sco_imm = $signed(tr_actual.imm[11:0]);
@@ -137,7 +129,7 @@ class cpu_scoreboard;
                     $display("Scoreboard PASS [SW]: PC=0x%8h | Instr=0x%8h | Addr=0x%8h | Data=0x%8h",
                              tr_actual.pc, tr_actual.instr,
                              tr_actual.mem_addr, tr_actual.mem_data);
-                    // Update golden RAM with stored value
+                   
                     golden_ram[expected_addr[7:2]] = golden_rf[tr_actual.rs2];
                 end else begin
                     error_count++;
@@ -148,7 +140,7 @@ class cpu_scoreboard;
                 total_count++;
             end
 
-        end // forever
+        end //forever
     endtask
 
     function void report();

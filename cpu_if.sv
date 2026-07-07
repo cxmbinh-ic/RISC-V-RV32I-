@@ -20,7 +20,11 @@ logic [6:0]  monitor_opcode;
 logic [4:0]  monitor_rs1;
 logic [4:0]  monitor_rs2;
 logic [2:0]  monitor_funct3;
-logic        monitor_funct7b5;
+logic [6:0]  monitor_funct7;
+//checking coverage forward and stall
+logic [1:0]  monitor_forward_A;
+logic [1:0]  monitor_forward_B;
+logic        monitor_PC_write;
 //clocking driver
 clocking cb_driver @(posedge clk);
 default input #1step output #1ns;
@@ -32,6 +36,7 @@ default input #1step output #1ns;
 input monitor_pc, monitor_pc_next, monitor_instr, monitor_reg_write, monitor_rd,
       monitor_rd_data, monitor_mem_write, monitor_mem_addr, monitor_mem_data,
       monitor_imm, monitor_branch,
-      monitor_opcode, monitor_rs1, monitor_rs2, monitor_funct3, monitor_funct7b5;
+      monitor_opcode, monitor_rs1, monitor_rs2, monitor_funct3, monitor_funct7
+      ,monitor_forward_A, monitor_forward_B, monitor_PC_write;
 endclocking
 endinterface

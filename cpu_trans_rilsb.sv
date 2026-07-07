@@ -21,6 +21,9 @@ class cpu_transaction;
     bit [31:0] pc;
     bit [31:0] pc_next;
     bit [31:0] imm_ext;
+    bit [1:0] forward_A; //to coverage foward A
+    bit [1:0] forward_B;//to coverage foward B
+    bit PC_write; // to coverage stall
 
     constraint solve_order {
         solve opcode before funct3, funct7, rd, rs1, rs2, imm;
@@ -41,7 +44,7 @@ class cpu_transaction;
     }
 
     // -------------------------------------------------------------------------
-    // constraint 2: rd != x0 
+    // constraint 2: rd != x0 cho các lệnh write register
     // -------------------------------------------------------------------------
     constraint legal_rd {
         if (opcode inside {7'b0110011, 7'b0010011, 7'b0000011})
@@ -49,7 +52,7 @@ class cpu_transaction;
     }
 
     // -------------------------------------------------------------------------
-    // constraint 3: legal funct3 
+    // constraint 3: legal funct3 theo opcode
     // -------------------------------------------------------------------------
     constraint legal_funct3 {
         if (opcode == 7'b0110011)       // R-type
@@ -106,7 +109,7 @@ class cpu_transaction;
     }
 
     // -------------------------------------------------------------------------
-    // Build 32-bit instruction word
+    //  Build 32-bit instruction word
     // -------------------------------------------------------------------------
     function void build_instruction();
         case (opcode)
@@ -169,10 +172,10 @@ class cpu_transaction;
             default: op_name = "NOP  ";
         endcase
 
-        $display("[%s] time=%0t | %s | rd=x%0d rs1=x%0d rs2=x%0d imm=%0d | instr=0x%08h",
+        $display("[%s] time=%0t | %s | rd=x%0d rs1=x%0d rs2=x%0d imm=%0d | instr(16)=0x%08h | funct7=0x%b",
                   tag, $time, op_name,
                   rd, rs1, rs2, $signed({{20{imm[11]}}, imm}),
-                  instr);
+                  instr, funct7);
     endfunction
 
 endclass

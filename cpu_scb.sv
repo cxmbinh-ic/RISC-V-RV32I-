@@ -12,8 +12,7 @@ class cpu_scoreboard;
     bit [31:0] golden_ram [0:63];  // mirrored data memory (64 words)
 
     //4. constructor
-    function new(mailbox #(cpu_transaction) mbx
-                 );
+    function new(mailbox #(cpu_transaction) mbx);
         this.scb_mbx     = mbx;
         for (int i = 0; i < 32; i++) golden_rf[i]  = 32'b0;
         for (int i = 0; i < 64; i++) golden_ram[i] = 32'b0;
@@ -32,7 +31,6 @@ class cpu_scoreboard;
 
             // -----------------------------------------------------------
             // R-type and I-type ALU
-            // Monitor captures at WB stage → compare write_data directly
             // -----------------------------------------------------------
             if (tr_actual.opcode inside {7'b0110011, 7'b0010011}) begin
                 bit [31:0] expected_data;
@@ -42,7 +40,9 @@ class cpu_scoreboard;
 
                 case (tr_actual.opcode)
                     7'b0110011: begin
-                        case ({tr_actual.funct7[5], tr_actual.funct3})
+                        bit alu_alt_bit;
+                        alu_alt_bit = (tr_actual.funct7 == 7'b0100000) && (tr_actual.funct3 == 3'b000 || tr_actual.funct3 == 3'b101);
+                        case ({alu_alt_bit, tr_actual.funct3})
                             4'b0000: expected_data = sco_rs1 + sco_rs2;
                             4'b1000: expected_data = sco_rs1 - sco_rs2;
                             4'b0111: expected_data = sco_rs1 & sco_rs2;
@@ -57,7 +57,9 @@ class cpu_scoreboard;
                         endcase
                     end
                     7'b0010011: begin
-                        case ({tr_actual.funct7[5], tr_actual.funct3})
+                        bit alu_alt_bit;
+                        alu_alt_bit = (tr_actual.funct7 == 7'b0100000) && (tr_actual.funct3 == 3'b101);
+                        case ({alu_alt_bit, tr_actual.funct3})
                             4'b0000: expected_data = sco_rs1 + sco_imm;
                             4'b0111: expected_data = sco_rs1 & sco_imm;
                             4'b0110: expected_data = sco_rs1 | sco_imm;
@@ -91,7 +93,7 @@ class cpu_scoreboard;
 
             // -----------------------------------------------------------
             // LW — Load Word
-            
+            // -----------------------------------------------------------
             else if (tr_actual.opcode == 7'b0000011) begin
                 bit [31:0] sco_rs1        = golden_rf[tr_actual.rs1];
                 bit signed [31:0] sco_imm = $signed(tr_actual.imm[11:0]);
@@ -110,7 +112,6 @@ class cpu_scoreboard;
                            tr_actual.pc, tr_actual.instr, expected_addr,
                            expected_data, tr_actual.write_data);
                 end
-                
                 if (tr_actual.rd != 5'b0)
                     golden_rf[tr_actual.rd] = expected_data;
                 total_count++;
@@ -118,7 +119,7 @@ class cpu_scoreboard;
 
             // -----------------------------------------------------------
             // SW — Store Word
-            
+            // -----------------------------------------------------------
             else if (tr_actual.opcode == 7'b0100011) begin
                 bit [31:0] sco_rs1        = golden_rf[tr_actual.rs1];
                 bit signed [31:0] sco_imm = $signed(tr_actual.imm[11:0]);
@@ -129,7 +130,6 @@ class cpu_scoreboard;
                     $display("Scoreboard PASS [SW]: PC=0x%8h | Instr=0x%8h | Addr=0x%8h | Data=0x%8h",
                              tr_actual.pc, tr_actual.instr,
                              tr_actual.mem_addr, tr_actual.mem_data);
-                   
                     golden_ram[expected_addr[7:2]] = golden_rf[tr_actual.rs2];
                 end else begin
                     error_count++;
@@ -140,7 +140,7 @@ class cpu_scoreboard;
                 total_count++;
             end
 
-        end //forever
+        end // forever
     endtask
 
     function void report();

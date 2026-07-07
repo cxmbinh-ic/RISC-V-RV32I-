@@ -8,6 +8,7 @@ class cpu_env;
     cpu_driver     drv;
     cpu_monitor    mon;
     cpu_scoreboard sco;
+    cpu_coverage   cov;
 
     //3. virtual interface
     virtual cpu_if vif;
@@ -23,8 +24,10 @@ class cpu_env;
         montoscb_mbx   = new();
         gen = new(gentodrive_mbx);
         drv = new(gentodrive_mbx, this.vif);
-        mon = new(montoscb_mbx,   this.vif);
+        cov = new();
+        mon = new(montoscb_mbx, this.vif, cov);
         sco = new(montoscb_mbx);
+        
     endfunction
 
     //6. run
@@ -37,8 +40,9 @@ class cpu_env;
             sco.run();
         join_any
         $display("[ENVIRONMENT] Generator has finished its instruction stream.");
-        repeat(50) @(posedge vif.clk);
+        repeat(5000) @(posedge vif.clk);
         sco.report();
+        cov.display_coverage();
         $display("[ENVIRONMENT] Testbench finished.");
     endtask
 

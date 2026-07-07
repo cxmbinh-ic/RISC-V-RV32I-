@@ -143,14 +143,20 @@ always @(posedge clk or posedge reset) begin
         reg_file[rd_addr] <= rd_data;
 end
 always @(*) begin
-    rs1_data = reg_file[rs1_addr];
-    rs2_data = reg_file[rs2_addr];
+    if(rs1_addr == rd_addr && reg_write && rd_addr != 5'b0)
+        rs1_data = rd_data;
+    else
+        rs1_data = reg_file[rs1_addr];
+    if(rs2_addr == rd_addr && reg_write && rd_addr != 5'b0)
+        rs2_data = rd_data;
+    else
+        rs2_data = reg_file[rs2_addr];
 end
 endmodule
 
 // -----------------------------------------------------------------------------
 // 6. Immediate Generator
-// -----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------- 
 module imm_gen (
     input  wire [31:0] instr,
     output reg  [31:0] imm_out
@@ -185,7 +191,8 @@ always @(*) begin
        ((EX_rd == ID_rs1) ||
         ((EX_rd == ID_rs2) &&
          (ID_opcode == 7'b0110011 ||   // R-type
-          ID_opcode == 7'b1100011))))  // B-type
+          ID_opcode == 7'b1100011 ||   // B-type
+          ID_opcode == 7'b0100011))))  // S-type
     begin
         PCWrite = 1'b0; IF_ID_Write = 1'b0; Control_Mux = 1'b1;
     end
@@ -334,7 +341,7 @@ end
 endmodule
 
 // -----------------------------------------------------------------------------
-// 14. TOP — rv32i_top 
+// 14. TOP — rv32i_top
 // -----------------------------------------------------------------------------
 module rv32i_top (
     input wire clk,
@@ -415,7 +422,7 @@ module rv32i_top (
         .ex_imm_ext(ex_imm_ext), .ex_rs1(ex_rs1), .ex_rs2(ex_rs2),
         .ex_rd(ex_rd), .ex_branch(ex_branch)
     );
-
+ 
     // EX Stage
     hazard_forward hazard_forward_inst (
         .clk(clk), .reset(reset),
@@ -438,7 +445,7 @@ module rv32i_top (
         .clk(clk), .reset(reset),
         .ex_RegWrite(ex_RegWrite), .ex_MemWrite(ex_MemWrite),
         .ex_MemRead(ex_MemRead), .ex_MemToReg(ex_MemToReg),
-        .ex_alu_result(ex_alu_result), .ex_rs2_data(ex_rs2_data), .ex_rd(ex_rd),
+        .ex_alu_result(ex_alu_result), .ex_rs2_data(ex_rs2_data_forwarded), .ex_rd(ex_rd),
         .mem_RegWrite(mem_RegWrite), .mem_MemWrite(mem_MemWrite),
         .mem_MemRead(mem_MemRead), .mem_MemToReg(mem_MemToReg),
         .mem_alu_result(mem_alu_result), .mem_rs2_data(mem_rs2_data), .mem_rd(mem_rd)

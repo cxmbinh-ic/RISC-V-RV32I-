@@ -1,0 +1,16 @@
+# Compile of alu.v was successful.
+# Compile of control_unit.v was successful.
+# Compile of data_memory.v was successful.
+# Compile of hazard_detection_unit.v was successful.
+# Compile of hazard_forward.v was successful.
+# Compile of immgen.v was successful.
+# Compile of instruction_memory.v was successful.
+# Compile of pc.v was successful.
+# Compile of pipe_ex_mem.v was successful.
+# Compile of pipe_id_ex.v was successful.
+# Compile of pipe_if_id.v was successful.
+# Compile of pipe_mem_wb.v was successful.
+# Compile of rf.v was successful.
+# Compile of rv32i_top.v was successful.
+# Compile of TESTBENCH_BASIC.v was successful.
+# 15 compiles, 0 failed with no errors.

@@ -1,0 +1,246 @@
+E:/verilog/RV32I_testbench/cpu_env.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I_testbench/cpu_env.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(3): (vlog-2730) Undefined variable: 'cpu_transaction'.
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(6): Invalid type 'cpu_gen'. Please check the type of the variable 'gen'.
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(7): Invalid type 'cpu_driver'. Please check the type of the variable 'drv'.
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(8): Invalid type 'cpu_monitor'. Please check the type of the variable 'mon'.
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(9): Invalid type 'cpu_scoreboard'. Please check the type of the variable 'sco'.
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(20): (vlog-2730) Undefined variable: 'gen'.
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(21): (vlog-2730) Undefined variable: 'drv'.
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(22): (vlog-2730) Undefined variable: 'mon'.
+** Error: E:/verilog/RV32I_testbench/cpu_env.sv(23): (vlog-2730) Undefined variable: 'sco'.
+
+} {3.0 12.0} {}} E:/verilog/RV32I/instruction_memory.v {1 {vlog -work work -vopt -stats=none {E:\verilog\RV32I\instruction_memory.v}
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module IMEM
+
+Top level modules:
+	IMEM
+
+} {} {}} E:/verilog/RV32I_testbench/cpu_gen.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I_testbench/cpu_gen.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I_testbench/cpu_gen.sv(3): Invalid type 'cpu_transaction'. Please check the type of the variable 'tr'.
+** Error: E:/verilog/RV32I_testbench/cpu_gen.sv(6): (vlog-2730) Undefined variable: 'cpu_transaction'.
+** Error: E:/verilog/RV32I_testbench/cpu_gen.sv(18): (vlog-2730) Undefined variable: 'tr'.
+
+} {3.0 6.0} {}} E:/verilog/RV32I/pipe_mem_wb.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/pipe_mem_wb.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module pipe_mem_wb
+
+Top level modules:
+	pipe_mem_wb
+
+} {} {}} E:/verilog/RV32I_testbench/cpu_scoreboard.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I_testbench/cpu_scoreboard.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I_testbench/cpu_scoreboard.sv(3): Invalid type 'cpu_transaction'. Please check the type of the variable 'tr'.
+** Error: E:/verilog/RV32I_testbench/cpu_scoreboard.sv(5): (vlog-2730) Undefined variable: 'cpu_transaction'.
+** Error: (vlog-13069) E:/verilog/RV32I_testbench/cpu_scoreboard.sv(156): near "function": syntax error, unexpected function.
+** Warning: E:/verilog/RV32I_testbench/cpu_scoreboard.sv(157): (vlog-2643) Unterminated string literal continues onto next line.
+** Error: (vlog-13069) E:/verilog/RV32I_testbench/cpu_scoreboard.sv(159): near "endfunction": syntax error, unexpected endfunction, expecting endtask.
+
+} {3.0 6.0 7.0 8.0} {}} E:/verilog/RV32I/cpu_scoreboard.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I/cpu_scoreboard.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I/cpu_scoreboard.sv(3): Invalid type 'cpu_transaction'. Please check the type of the variable 'tr'.
+** Error: E:/verilog/RV32I/cpu_scoreboard.sv(5): (vlog-2730) Undefined variable: 'cpu_transaction'.
+** Error: (vlog-13069) E:/verilog/RV32I/cpu_scoreboard.sv(156): near "function": syntax error, unexpected function.
+** Warning: E:/verilog/RV32I/cpu_scoreboard.sv(157): (vlog-2643) Unterminated string literal continues onto next line.
+** Error: (vlog-13069) E:/verilog/RV32I/cpu_scoreboard.sv(159): near "endfunction": syntax error, unexpected endfunction, expecting endtask.
+
+} {3.0 6.0 7.0 8.0} {}} E:/verilog/RV32I_testbench/cpu_transaction.sv {1 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I_testbench/cpu_transaction.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+
+Top level modules:
+	--none--
+
+} {} {}} E:/verilog/RV32I/pipe_ex_mem.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/pipe_ex_mem.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module pipe_ex_mem
+
+Top level modules:
+	pipe_ex_mem
+
+} {} {}} E:/verilog/RV32I/TESTBENCH_BASIC.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/TESTBENCH_BASIC.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module rv32i_basic_tb
+
+Top level modules:
+	rv32i_basic_tb
+
+} {} {}} E:/verilog/RV32I/cpu_monitor.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I/cpu_monitor.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I/cpu_monitor.sv(4): Invalid type 'transaction'. Please check the type of the variable 'tr'.
+** Error: E:/verilog/RV32I/cpu_monitor.sv(6): (vlog-2730) Undefined variable: 'transaction'.
+** Error: E:/verilog/RV32I/cpu_monitor.sv(22): (vlog-2730) Undefined variable: 'tr'.
+** Error: E:/verilog/RV32I/cpu_monitor.sv(39): (vlog-2730) Undefined variable: 'tr'.
+** Error: E:/verilog/RV32I/cpu_monitor.sv(56): (vlog-2730) Undefined variable: 'tr'.
+
+} {3.0 8.0} {}} E:/verilog/RV32I_testbench/tb_top.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I_testbench/tb_top.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I_testbench/tb_top.sv(2): Cannot open `include file "cpu_interface.sv".
+** Error: (vlog-13069) ** while parsing file included at E:/verilog/RV32I_testbench/tb_top.sv(3)
+** at E:\verilog\RV32I_testbench\cpu_transaction.sv(23): near "legal_opcode": syntax error, unexpected IDENTIFIER.
+
+} {3.0 5.0} {}} E:/verilog/RV32I/alu.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/alu.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module alu
+
+Top level modules:
+	alu
+
+} {} {}} E:/verilog/RV32I/data_memory.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/data_memory.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module data_memory
+
+Top level modules:
+	data_memory
+
+} {} {}} E:/verilog/RV32I/tb_top.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I/tb_top.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I/tb_top.sv(2): Cannot find `include file "cpu_interface.sv" in directories:
+    C:/questasim64_10.7c/ovm-2.1.2/../verilog_src/ovm-2.1.2/src, C:/questasim64_10.7c/uvm-1.1d/../verilog_src/uvm-1.1d/src
+** Error: ** while parsing file included at E:/verilog/RV32I/tb_top.sv(6)
+** at cpu_monitor.sv(4): Invalid type 'transaction'. Please check the type of the variable 'tr'.
+** Error: ** while parsing file included at E:/verilog/RV32I/tb_top.sv(6)
+** at cpu_monitor.sv(6): (vlog-2730) Undefined variable: 'transaction'.
+** Error: ** while parsing file included at E:/verilog/RV32I/tb_top.sv(6)
+** at cpu_monitor.sv(22): (vlog-2730) Undefined variable: 'tr'.
+** Error: ** while parsing file included at E:/verilog/RV32I/tb_top.sv(6)
+** at cpu_monitor.sv(39): (vlog-2730) Undefined variable: 'tr'.
+** Error: ** while parsing file included at E:/verilog/RV32I/tb_top.sv(6)
+** at cpu_monitor.sv(56): (vlog-2730) Undefined variable: 'tr'.
+** Error: (vlog-13069) ** while parsing file included at E:/verilog/RV32I/tb_top.sv(7)
+** at cpu_scoreboard.sv(156): near "function": syntax error, unexpected function.
+** Warning: ** while parsing file included at E:/verilog/RV32I/tb_top.sv(7)
+** at cpu_scoreboard.sv(157): (vlog-2643) Unterminated string literal continues onto next line.
+** Error: (vlog-13069) ** while parsing file included at E:/verilog/RV32I/tb_top.sv(7)
+** at cpu_scoreboard.sv(159): near "endfunction": syntax error, unexpected endfunction, expecting endtask.
+** Error: ** while parsing file included at E:/verilog/RV32I/tb_top.sv(8)
+** at cpu_env.sv(13): Illegal declaration after the statement near line '1'.  Declarations must precede statements.  Look for stray semicolons.
+** Error: (vlog-13069) ** while parsing file included at E:/verilog/RV32I/tb_top.sv(8)
+** at cpu_env.sv(15): near "endfunction": syntax error, unexpected endfunction, expecting endtask.
+** Error: (vlog-13069) ** while parsing file included at E:/verilog/RV32I/tb_top.sv(8)
+** at cpu_env.sv(24): near "endfunction": syntax error, unexpected endfunction, expecting endtask.
+
+} {3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 19.0 20.0 21.0 22.0 23.0 24.0 25.0 26.0} {}} E:/verilog/RV32I/cpu_env.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I/cpu_env.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I/cpu_env.sv(3): (vlog-2730) Undefined variable: 'cpu_transaction'.
+** Error: E:/verilog/RV32I/cpu_env.sv(6): Invalid type 'cpu_gen'. Please check the type of the variable 'gen'.
+** Error: E:/verilog/RV32I/cpu_env.sv(7): Invalid type 'cpu_driver'. Please check the type of the variable 'drv'.
+** Error: E:/verilog/RV32I/cpu_env.sv(8): Invalid type 'cpu_monitor'. Please check the type of the variable 'mon'.
+** Error: E:/verilog/RV32I/cpu_env.sv(9): Invalid type 'cpu_scoreboard'. Please check the type of the variable 'sco'.
+** Error: E:/verilog/RV32I/cpu_env.sv(20): (vlog-2730) Undefined variable: 'gen'.
+** Error: E:/verilog/RV32I/cpu_env.sv(21): (vlog-2730) Undefined variable: 'drv'.
+** Error: E:/verilog/RV32I/cpu_env.sv(22): (vlog-2730) Undefined variable: 'mon'.
+** Error: E:/verilog/RV32I/cpu_env.sv(23): (vlog-2730) Undefined variable: 'sco'.
+
+} {3.0 12.0} {}} E:/verilog/RV32I/pc.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/pc.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module pc
+
+Top level modules:
+	pc
+
+} {} {}} E:/verilog/RV32I/cpu_gen.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I/cpu_gen.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I/cpu_gen.sv(3): Invalid type 'cpu_transaction'. Please check the type of the variable 'tr'.
+** Error: E:/verilog/RV32I/cpu_gen.sv(6): (vlog-2730) Undefined variable: 'cpu_transaction'.
+** Error: E:/verilog/RV32I/cpu_gen.sv(18): (vlog-2730) Undefined variable: 'tr'.
+
+} {3.0 6.0} {}} E:/verilog/RV32I/immgen.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/immgen.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module imm_gen
+
+Top level modules:
+	imm_gen
+
+} {} {}} E:/verilog/RV32I_testbench/cpu_driver.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I_testbench/cpu_driver.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I_testbench/cpu_driver.sv(3): Invalid type 'cpu_transaction'. Please check the type of the variable 'tr'.
+** Error: E:/verilog/RV32I_testbench/cpu_driver.sv(5): (vlog-2730) Undefined variable: 'cpu_transaction'.
+
+} {3.0 5.0} {}} E:/verilog/RV32I/pipe_id_ex.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/pipe_id_ex.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module pipe_id_ex
+
+Top level modules:
+	pipe_id_ex
+
+} {} {}} E:/verilog/RV32I/cpu_driver.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I/cpu_driver.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I/cpu_driver.sv(3): Invalid type 'cpu_transaction'. Please check the type of the variable 'tr'.
+** Error: E:/verilog/RV32I/cpu_driver.sv(5): (vlog-2730) Undefined variable: 'cpu_transaction'.
+
+} {3.0 5.0} {}} E:/verilog/RV32I/hazard_forward.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/hazard_forward.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module hazard_forward
+
+Top level modules:
+	hazard_forward
+
+} {} {}} E:/verilog/RV32I/hazard_branch.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/hazard_branch.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+
+} {} {}} E:/verilog/RV32I/hazard_detection_unit.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/hazard_detection_unit.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module hazard_detection_unit
+
+Top level modules:
+	hazard_detection_unit
+
+} {} {}} E:/verilog/RV32I/cpu_transaction.sv {1 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I/cpu_transaction.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+
+Top level modules:
+	--none--
+
+} {} {}} E:/verilog/RV32I/rv32i_top.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/rv32i_top.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module rv32i_top
+
+Top level modules:
+	rv32i_top
+
+} {} {}} E:/verilog/RV32I/rf.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/rf.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module rf
+
+Top level modules:
+	rf
+
+} {} {}} E:/verilog/RV32I/pipe_if_id.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/pipe_if_id.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module pipe_if_id
+
+Top level modules:
+	pipe_if_id
+
+} {} {}} E:/verilog/RV32I/control_unit.v {1 {vlog -work work -vopt -stats=none E:/verilog/RV32I/control_unit.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module control_unit
+
+Top level modules:
+	control_unit
+
+} {} {}} E:/verilog/RV32I_testbench/cpu_if.sv {1 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I_testbench/cpu_if.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling interface cpu_if
+
+Top level modules:
+	--none--
+
+} {} {}} E:/verilog/RV32I/cpu_if.sv {1 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I/cpu_if.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling interface cpu_if
+
+Top level modules:
+	--none--
+
+} {} {}} E:/verilog/RV32I_testbench/cpu_monitor.sv {0 {vlog -work work -vopt -sv -stats=none E:/verilog/RV32I_testbench/cpu_monitor.sv
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+** Error: E:/verilog/RV32I_testbench/cpu_monitor.sv(4): Invalid type 'transaction'. Please check the type of the variable 'tr'.
+** Error: E:/verilog/RV32I_testbench/cpu_monitor.sv(6): (vlog-2730) Undefined variable: 'transaction'.
+** Error: E:/verilog/RV32I_testbench/cpu_monitor.sv(22): (vlog-2730) Undefined variable: 'tr'.
+** Error: E:/verilog/RV32I_testbench/cpu_monitor.sv(39): (vlog-2730) Undefined variable: 'tr'.
+** Error: E:/verilog/RV32I_testbench/cpu_monitor.sv(56): (vlog-2730) Undefined variable: 'tr'.
+
+} {3.0 8.0} {}}

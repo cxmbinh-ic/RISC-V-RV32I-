@@ -28,6 +28,7 @@ module tb_top;
         end
     end
 
+
     // ================================================================
     // PIPELINE SPY CHAIN
     // ================================================================
@@ -40,6 +41,9 @@ module tb_top;
     logic [2:0]  ex_funct3,  mem_funct3,  wb_funct3;
     logic [6:0]  ex_funct7, mem_funct7, wb_funct7;
     logic        ex_PC_write, mem_PC_write, wb_PC_write;
+
+    //for SVA driver
+    assign Control_Mux_SVA = my_cpu.Control_Mux;
 
     // Delay 1: ID → EX 
     always @(posedge clk) begin
@@ -173,8 +177,9 @@ module tb_top;
         clk = 0;
         env = new(intf);
         env.build();
-        env.gen.num_instr = 2000;
-        env.run();
+        env.gen.num_instr = 3000;
+        env.run();// for task run randomize
+        //env.run_direct(); for task run direct
         $finish;
     end
 

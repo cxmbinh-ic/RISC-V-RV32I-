@@ -58,8 +58,8 @@ class cpu_coverage;
         //8. hazard forward
         forward_cp : coverpoint {tr.forward_A, tr.forward_B} {
             bins no_forward = {2'b00};
-            bins forward_A   = {2'b01};
-            bins forward_B   = {2'b10};
+            bins forward_A   = {2'b01, 2'b10};
+            bins forward_B   = {2'b01, 2'b10};
         }
         //9. stall
         stall_cp : coverpoint tr.PC_write {

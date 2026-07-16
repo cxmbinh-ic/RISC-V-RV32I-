@@ -31,7 +31,8 @@ class cpu_env;
     endfunction
 
     //6. run
-    task run();
+    
+        task run();
         $display("[ENVIRONMENT] Launching all parallel components...");
         fork
             gen.run();
@@ -44,6 +45,26 @@ class cpu_env;
         sco.report();
         cov.display_coverage();
         $display("[ENVIRONMENT] Testbench finished.");
-    endtask
+        endtask
+
+
+        task run_direct();
+        $display("[ENVIRONMENT] Launching all parallel components...");
+
+
+        fork
+            mon.run();
+            sco.run();
+        join_none
+
+            gen.run_direct(); //run direct
+            drv.run();//check from T1 to T11, turn on when drv.run_T12() turn off or drv randomize
+
+            //drv.run_T12(); //only turn on to check F4 T12, turn on when drv.run() turn off
+            repeat(10000) @(posedge vif.clk);
+            sco.report();
+            cov.display_coverage();
+            $display("[ENVIRONMENT] Testbench finished.");
+        endtask
 
 endclass

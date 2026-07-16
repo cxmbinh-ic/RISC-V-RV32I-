@@ -34,5 +34,29 @@ class cpu_driver;
     vif.cb_driver.reset <= 0;
     //drive cpu
     endtask
+    //------- T12: reset in the midle of stall
+    task run_T12();
+    $display("STARTING DRIVING CPU T12");
+    vif.cb_driver.reset <= 1;
+    // get T1a LW
+    driver_mbx.get(tr);       
+    @(vif.cb_driver);
+    vif.cb_driver.drv_instr_addr <= 10'd0;
+    vif.cb_driver.drv_instr <= tr.instr;
+    // get T1b ADD
+    driver_mbx.get(tr);       
+    @(vif.cb_driver);
+    vif.cb_driver.drv_instr_addr <= 10'd1;
+    vif.cb_driver.drv_instr <= tr.instr;
+     
+    vif.cb_driver.reset <= 0;
+
+    // Waiting for stall and reset in the midle
+    @(posedge vif.clk iff(vif.Control_Mux_SVA == 1'b1));
+    $display("reset mid stall at time=%0t", $time);
+    vif.cb_driver.reset <= 1;
+    @(vif.cb_driver);
+    vif.cb_driver.reset <= 0;
+    endtask
 
 endclass

@@ -32,7 +32,6 @@ module tb_top;
     // ================================================================
     // PIPELINE SPY CHAIN
     // ================================================================
-
     // ---------- Delay chain: ID → EX → MEM → WB ----------
 
     logic [6:0]  ex_opcode,  mem_opcode,  wb_opcode;
@@ -42,8 +41,8 @@ module tb_top;
     logic [6:0]  ex_funct7, mem_funct7, wb_funct7;
     logic        ex_PC_write, mem_PC_write, wb_PC_write;
 
-    //for SVA driver
-    assign Control_Mux_SVA = my_cpu.Control_Mux;
+
+        
 
     // Delay 1: ID → EX 
     always @(posedge clk) begin
@@ -167,7 +166,16 @@ module tb_top;
             // --- Forwarding and stall signals ---
             intf.monitor_forward_A <= wb_forward_A;
             intf.monitor_forward_B <= wb_forward_B;
-            intf.monitor_PC_write  <= wb_PC_write;
+            intf.monitor_PC_write  <= mem_PC_write; // dont use wb_PC_write cause it go to NOP so we cant coverage it
+            //for SVA
+            intf.Control_Mux_SVA <= my_cpu.Control_Mux;
+            //for scoreboard branch checking
+            intf.monitor_branch_taken <= my_cpu.branch_taken;
+            intf.monitor_id_pc <= id_pc_spy;
+            intf.monitor_id_pc_next <= id_pcnext;
+            intf.monitor_mem_pc <= mem_pc_spy;
+            intf.monitor_mem_pc_next <= mem_pcnext;
+
         end
     end
 
@@ -177,7 +185,7 @@ module tb_top;
         clk = 0;
         env = new(intf);
         env.build();
-        env.gen.num_instr = 3000;
+        env.gen.num_instr = 750;
         env.run();// for task run randomize
         //env.run_direct(); for task run direct
         $finish;

@@ -24,6 +24,11 @@ class cpu_transaction;
     bit [1:0] forward_A; //to coverage foward A
     bit [1:0] forward_B;//to coverage foward B
     bit PC_write; // to coverage stall
+    //for scoreboard branch checking
+    bit [31:0] id_pc;
+    bit [31:0] id_pc_next;
+    bit [31:0] mem_pc;
+    bit [31:0] mem_pc_next;
 
     constraint solve_order {
         solve opcode before funct3, funct7, rd, rs1, rs2, imm;
@@ -70,7 +75,7 @@ class cpu_transaction;
 
         
     }
-
+ 
     // -------------------------------------------------------------------------
     // constraint 4: legal funct7
     // -------------------------------------------------------------------------

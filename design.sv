@@ -352,7 +352,7 @@ module rv32i_top (
     wire        id_reg_write, id_alu_src, id_mem_write, id_mem_read, id_mem_to_reg, id_branch;
     wire [3:0]  id_alu_control;
     wire        PCWrite, IF_ID_Write, Control_Mux;
-    wire        id_RegWrite_mux, id_MemWrite_mux, id_MemRead_mux, id_MemToReg_mux, id_ALUSrc_mux;
+    wire        id_RegWrite_mux, id_MemWrite_mux, id_MemRead_mux, id_MemToReg_mux, id_ALUSrc_mux, id_branch_mux;
     wire [3:0]  id_ALUControl_mux;
     wire [1:0]  forward_A, forward_B;
     wire [31:0] ex_rs1_data_forwarded, ex_rs2_data_forwarded;
@@ -406,6 +406,7 @@ module rv32i_top (
     assign id_ALUControl_mux= Control_Mux ? 4'b0000 : id_alu_control;
     assign id_MemToReg_mux  = Control_Mux ? 1'b0    : id_mem_to_reg;
     assign id_ALUSrc_mux    = Control_Mux ? 1'b0    : id_alu_src;
+    assign id_branch_mux    = Control_Mux ? 1'b0    : id_branch;
 
     pipe_id_ex reg_ID_EX (
         .clk(clk), .reset(reset), .flush(branch_taken),
@@ -414,7 +415,7 @@ module rv32i_top (
         .id_MemToReg(id_MemToReg_mux), .id_ALUControl(id_ALUControl_mux),
         .id_pc(id_pc), .id_rs1_data(id_rs1_data), .id_rs2_data(id_rs2_data),
         .id_imm_ext(id_imm_ext), .id_rs1(id_instr[19:15]), .id_rs2(id_instr[24:20]),
-        .id_rd(id_instr[11:7]), .id_branch(id_branch),
+        .id_rd(id_instr[11:7]), .id_branch(id_branch_mux),
         .ex_RegWrite(ex_RegWrite), .ex_ALUSrc(ex_ALUSrc),
         .ex_MemWrite(ex_MemWrite), .ex_MemRead(ex_MemRead),
         .ex_MemToReg(ex_MemToReg), .ex_ALUControl(ex_ALUControl),

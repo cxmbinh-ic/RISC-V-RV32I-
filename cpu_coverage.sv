@@ -56,10 +56,15 @@ class cpu_coverage;
             ignore_bins s_b_type = binsof(opcode_cp) intersect {7'b0100011, 7'b1100011};
         }
         //8. hazard forward
-        forward_cp : coverpoint {tr.forward_A, tr.forward_B} {
-            bins no_forward = {2'b00};
-            bins forward_A   = {2'b01, 2'b10};
-            bins forward_B   = {2'b01, 2'b10};
+        forward_A_cp : coverpoint tr.forward_A {
+            bins no_forward_A = {2'b00};
+            bins forward_A_mem   = {2'b01};
+            bins forward_A_wb   = {2'b10};       
+        }
+        forward_B_cp : coverpoint tr.forward_A {
+            bins no_forward_B = {2'b00};
+            bins forward_B_mem   = {2'b01};
+            bins forward_B_wb   = {2'b10};       
         }
         //9. stall
         stall_cp : coverpoint tr.PC_write {
@@ -92,7 +97,8 @@ class cpu_coverage;
         $display("[COVERAGE DETAILS] funct7 coverage: %0.2f%%", cpu_cg.funct7_cp.get_coverage());
         $display("[COVERAGE DETAILS] opcode x funct3 x funct7 cross coverage: %0.2f%%", cpu_cg.opcode_funct3_funct7_cross.get_coverage());
         $display("[COVERAGE DETAILS] opcode x rd cross coverage: %0.2f%%", cpu_cg.opcode_rd_cross.get_coverage());
-        $display("[COVERAGE DETAILS] forwarding coverage: %0.2f%%", cpu_cg.forward_cp.get_coverage());
+        $display("[COVERAGE DETAILS] forwarding A coverage: %0.2f%%", cpu_cg.forward_A_cp.get_coverage());
+        $display("[COVERAGE DETAILS] forwarding B coverage: %0.2f%%", cpu_cg.forward_B_cp.get_coverage());
         $display("[COVERAGE DETAILS] stall coverage: %0.2f%%", cpu_cg.stall_cp.get_coverage());
     endfunction
 endclass

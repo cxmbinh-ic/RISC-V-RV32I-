@@ -234,7 +234,7 @@ This testbench and checker are run using **Xilinx Vivado Simulator (xsim)**.
    `` `include `` directives in `tb_top.sv` pull in the rest of the class
    files automatically, so they just need to sit in the same directory).
 3. Set `tb_top` as the top module for simulation.
-4. Run Behavioral Simulation (`Run Simulation` → `Run Behavioral Simulation`).
+4. Run Behavioral Simulation (setting run Run simulation -> xsim.simulate.xsim.more_options*: -sv_seed random, then run until you find a bug or full coverage and no bug)(`Run Simulation` → `Run Behavioral Simulation`).
    The SVA checker attaches automatically via `bind` — no extra
    instantiation or top-module changes are needed.
 5. Let the simulation run to completion (`run -all`, or set the run time long
@@ -258,12 +258,9 @@ This testbench and checker are run using **Xilinx Vivado Simulator (xsim)**.
 ## 9. Sample Output
 
 ```
-[ENVIRONMENT] Launching all parallel components...
-STARTING GENERATING CPU INSTR
-........
-Scoreboard Summary: Total=2092 | PASS=2092 | FAIL=0
+Scoreboard Summary: Total=516 | PASS=516 | FAIL=0
 =================================================
-[OVERALL COVERAGE] CPU Coverage: 100.00%
+[OVERALL COVERAGE] CPU Coverage: 99.80%
 [COVERAGE DETAILS] opcode coverage: 100.00%
 [COVERAGE DETAILS] rd coverage: 100.00%
 [COVERAGE DETAILS] rs1 coverage: 100.00%
@@ -271,11 +268,11 @@ Scoreboard Summary: Total=2092 | PASS=2092 | FAIL=0
 [COVERAGE DETAILS] funct3 coverage: 100.00%
 [COVERAGE DETAILS] funct7 coverage: 100.00%
 [COVERAGE DETAILS] opcode x funct3 x funct7 cross coverage: 100.00%
-[COVERAGE DETAILS] opcode x rd cross coverage: 100.00%
-[COVERAGE DETAILS] forwarding coverage: 100.00%
+[COVERAGE DETAILS] opcode x rd cross coverage: 97.85%
+[COVERAGE DETAILS] forwarding A coverage: 100.00%
+[COVERAGE DETAILS] forwarding B coverage: 100.00%
 [COVERAGE DETAILS] stall coverage: 100.00%
 [ENVIRONMENT] Testbench finished.
-$finish called at time : 99990 ns : File "E:/verilog/RV32I_testbench/tb_top.sv" Line 188
 ```
 
 No `[F1]`–`[F24]` assertion errors printed during the run indicates all SVA

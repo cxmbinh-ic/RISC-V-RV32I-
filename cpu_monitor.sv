@@ -3,6 +3,7 @@ class cpu_monitor;
 
     //1. trans
     cpu_transaction tr;
+    int retired_count = 0;
     //2. mailbox
     mailbox #(cpu_transaction) montoscb_mbx;
     //3. virtual interface and coverage
@@ -51,6 +52,7 @@ class cpu_monitor;
                          vif.cb_monitor.monitor_funct3);
                 cov.sample(tr);
                 montoscb_mbx.put(tr);
+                retired_count++;
             end
             //check for SW
             else if(vif.cb_monitor.monitor_mem_write) begin
@@ -79,6 +81,7 @@ class cpu_monitor;
                          vif.cb_monitor.monitor_funct3);
                 cov.sample(tr);
                 montoscb_mbx.put(tr);
+                retired_count++;
             end
             //check for Branch
             else if(vif.cb_monitor.monitor_branch) begin
@@ -94,6 +97,11 @@ class cpu_monitor;
                 tr.forward_A = vif.cb_monitor.monitor_forward_A;
                 tr.forward_B = vif.cb_monitor.monitor_forward_B;
                 tr.PC_write = vif.cb_monitor.monitor_PC_write;
+                //for scoreboard checking
+                tr.id_pc = vif.cb_monitor.monitor_id_pc;
+                tr.id_pc_next = vif.cb_monitor.monitor_id_pc_next;
+                tr.mem_pc = vif.cb_monitor.monitor_mem_pc;
+                tr.mem_pc_next = vif.cb_monitor.monitor_mem_pc_next;
 
                 $display("Monitor captured [BRANCH]:time: %0t | PC = 0x%b | PC Next = 0x%b | Instruction = 0x%8h | Immediate = 0x%0d", 
                          $time,
@@ -104,6 +112,7 @@ class cpu_monitor;
                          vif.cb_monitor.monitor_branch);
                 cov.sample(tr);
                 montoscb_mbx.put(tr);
+                retired_count++;
             end
         end
     endtask

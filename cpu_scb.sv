@@ -10,12 +10,14 @@ class cpu_scoreboard;
     //3. golden reference model
     bit [31:0] golden_rf  [0:31];  // mirrored register file
     bit [31:0] golden_ram [0:63];  // mirrored data memory (64 words)
+    bit [31:0] golden_pc;
 
     //4. constructor
     function new(mailbox #(cpu_transaction) mbx);
         this.scb_mbx     = mbx;
         for (int i = 0; i < 32; i++) golden_rf[i]  = 32'b0;
         for (int i = 0; i < 64; i++) golden_ram[i] = 32'b0;
+        golden_pc = 32'd0;
     endfunction
 
     //5. counters
@@ -77,18 +79,19 @@ class cpu_scoreboard;
 
                 if (tr_actual.write_data == expected_data) begin
                     finish_count++;
-                    $display("Scoreboard PASS: PC=0x%8h | Instr=0x%8h | rd=x%0d | Expected=0x%8h | Actual=0x%8h",
+                    $display("Scoreboard PASS: PC=0x%d | Instr=0x%8h | rd=x%0d | Expected=0x%8h | Actual=0x%8h",
                              tr_actual.pc, tr_actual.instr, tr_actual.rd,
                              expected_data, tr_actual.write_data);
                 end else begin
                     error_count++;
-                    $error("Scoreboard FAIL: PC=0x%8h | Instr=0x%8h | rd=x%0d | Expected=0x%8h | Actual=0x%8h",
+                    $error("Scoreboard FAIL: PC=0x%d | Instr=0x%8h | rd=x%0d | Expected=0x%8h | Actual=0x%8h",
                            tr_actual.pc, tr_actual.instr, tr_actual.rd,
                            expected_data, tr_actual.write_data);
                 end
                 if (tr_actual.rd != 5'b0)
                     golden_rf[tr_actual.rd] = expected_data;
                 total_count++;
+                golden_pc = golden_pc + 32'd4;
             end
 
             // -----------------------------------------------------------
@@ -104,17 +107,18 @@ class cpu_scoreboard;
                 // Compare the loaded data against golden RAM
                 if (tr_actual.write_data === expected_data) begin
                     finish_count++;
-                    $display("Scoreboard PASS [LW]: PC=0x%8h | Instr=0x%8h | Addr=0x%8h | Data=0x%8h",
+                    $display("Scoreboard PASS [LW]: PC=0x%d | Instr=0x%8h | Addr=0x%8h | Data=0x%8h",
                              tr_actual.pc, tr_actual.instr, expected_addr, tr_actual.write_data);
                 end else begin
                     error_count++;
-                    $error("Scoreboard FAIL [LW]: PC=0x%8h | Instr=0x%8h | Addr=0x%8h | ExpData=0x%8h | ActData=0x%8h",
+                    $error("Scoreboard FAIL [LW]: PC=0x%d | Instr=0x%8h | Addr=0x%8h | ExpData=0x%8h | ActData=0x%8h",
                            tr_actual.pc, tr_actual.instr, expected_addr,
                            expected_data, tr_actual.write_data);
                 end
                 if (tr_actual.rd != 5'b0)
                     golden_rf[tr_actual.rd] = expected_data;
                 total_count++;
+                golden_pc = golden_pc + 32'd4;
             end
 
             // -----------------------------------------------------------
@@ -127,18 +131,40 @@ class cpu_scoreboard;
 
                 if (tr_actual.mem_addr === expected_addr) begin
                     finish_count++;
-                    $display("Scoreboard PASS [SW]: PC=0x%8h | Instr=0x%8h | Addr=0x%8h | Data=0x%8h",
+                    $display("Scoreboard PASS [SW]: PC=0x%d | Instr=0x%8h | Addr=0x%8h | Data=0x%8h",
                              tr_actual.pc, tr_actual.instr,
                              tr_actual.mem_addr, tr_actual.mem_data);
                     golden_ram[expected_addr[7:2]] = golden_rf[tr_actual.rs2];
                 end else begin
                     error_count++;
-                    $error("Scoreboard FAIL [SW]: PC=0x%8h | Instr=0x%8h | ExpAddr=0x%8h | ActAddr=0x%8h",
+                    $error("Scoreboard FAIL [SW]: PC=0x%d | Instr=0x%8h | ExpAddr=0x%8h | ActAddr=0x%8h",
                            tr_actual.pc, tr_actual.instr,
                            expected_addr, tr_actual.mem_addr);
                 end
                 total_count++;
+                golden_pc = golden_pc + 32'd4;
             end
+            else if (tr_actual.opcode == 7'b1100011) begin
+                bit [31:0] sco_rs1 = golden_rf[tr_actual.rs1];
+                bit [31:0] sco_rs2 = golden_rf[tr_actual.rs2];
+                bit [31:0] sco_imm = (tr_actual.imm[11:0]);
+                bit taken = (sco_rs1 == sco_rs2) ? 1'b1 : 1'b0;
+                golden_pc = (taken)? (golden_pc + sco_imm) : (golden_pc + 32'd4);
+                if((golden_pc == tr_actual.id_pc) && taken) begin
+                    finish_count++;
+                    $display("Scoreboard PASS [Branch]: PC=0x%d PC_next=0x%d id_PC = 0x%d id_PC_next=0x%d golden_pc =0x%d imm =0x%d rs1_data = 0x%8h rs2_data = 0x%8h", tr_actual.pc, tr_actual.pc_next, tr_actual.id_pc, tr_actual.id_pc_next, golden_pc, sco_imm, sco_rs1, sco_rs2);
+                end
+                else if((golden_pc == tr_actual.mem_pc) && !taken) begin
+                    finish_count++;
+                    $display("Scoreboard PASS [Branch]: PC=0x%d PC_next=0x%d mem_PC = 0x%d mem_PC_next=0x%d golden_pc =0x%d imm =0x%d rs1_data = 0x%8h rs2_data = 0x%8h", tr_actual.pc, tr_actual.pc_next, tr_actual.mem_pc, tr_actual.mem_pc_next, golden_pc, sco_imm, sco_rs1, sco_rs2);
+                end
+                else begin
+                    error_count++;
+                    $display("Scoreboard FAIL [Branch]: PC=0x%d PC_next=0x%d id_PC = 0x%d id_PC-next=0x%d mem_PC = 0x%d mem_PC_next=0x%d golden_pc =0x%d imm =0x%d rs1_data = 0x%8h rs2_data = 0x%8h", tr_actual.pc, tr_actual.pc_next, tr_actual.id_pc, tr_actual.id_pc_next, tr_actual.mem_pc, tr_actual.mem_pc_next, golden_pc, sco_imm, sco_rs1, sco_rs2);
+                end
+                total_count++;
+                end
+            
 
         end // forever
     endtask

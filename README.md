@@ -285,9 +285,6 @@ properties held across the full random regression.
 - Add JAL/JALR and remaining B-type branches (BNE, BLT, BGE, BLTU, BGEU) —
   and their corresponding F-series properties in `cpu_sva.sv`
 - Extend the golden data memory / register file to model unaligned access checks
-- Extend `cpu_scb.sv` to handle the branch opcode (`1100011`) directly —
-  currently branch data correctness is only checked by the SVA properties
-  (F18–F22), not by the scoreboard
 - Generalize F24 to an arbitrary-length chain of back-to-back load-use
   hazards using a counted sequence local variable, rather than the current
   fixed two-hazard shape
